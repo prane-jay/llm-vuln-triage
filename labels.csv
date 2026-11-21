@@ -1,0 +1,15 @@
+number,rule,file,line,label,reason
+1,hardcoded-jwt-secret,lib/insecurity.ts,54,real,Private key typed directly into source at line 21
+2,express-res-sendfile,routes/fileServer.ts,32,real,Allowlist check runs before null byte is cut so bad file names can get through
+3,express-res-sendfile,routes/keyServer.ts,14,real,No allowlist so any file in the encryptionkeys folder can be accessed by a user
+4,express-res-sendfile,routes/logfileServer.ts,14,real,No allowlist so any file in the logs can be accessed by a user
+5,express-sequelize-injection,routes/login.ts,34,real,User email is glued directly into the SQL query so a visitor can change the query and log in as anyone
+6,express-res-sendfile,routes/quarantineServer.ts,14,real,No allowlist so any file in the quarantine folder can be accessed by a user 
+7,express-open-redirect,routes/redirect.ts,18,real,Allow list only checks that an allowed address appears somewhere in the URL so attacker URLs can slip through 
+8,express-sequelize-injection,routes/search.ts,23,real,Search text is inserted directly into the SQL query with only a length limit (harmful text can be put here)
+9,code-string-concat,routes/userProfile.ts,65,real,Username text is passed to eval so a user can run code on the server
+10,express-check-directory-listing,server.ts,269,false_positive,Folder is listed on purpose with README hidden and a path check that keeps visitors inside it
+11,express-check-directory-listing,server.ts,290,real,Directory listing of the ftp folder exposes backup files that the null byte bug lets you download 
+12,express-check-directory-listing,server.ts,294,false_positive,The well-known folder is by intention public and nothing sensitive is marked there
+13,express-check-directory-listing,server.ts,298,real,Directory listing of the encryptionkeys folder shows an attacker which key files to download
+14,express-check-directory-listing,server.ts,302,real,Directory listings of the logs folder exposes server log files to anybody
