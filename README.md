@@ -71,16 +71,16 @@ git clone https://github.com/juice-shop/juice-shop.git ~/juice-shop
 python3 triage.py
 python3 compare.py verdicts_temp0.csv
 ```
-`results.json` (the Semgrep output) is included, so you do not need to re-run the scan. 
+`results.json` (the Semgrep output) is included so you do not need to re run the scan. 
 
 ## Files
-- triage.py: builds the prompt for each finding, queries the local model, saves verdicts
-- compare.py: scores a verdicts file against the labels
-- list_findings.py: prints the Semgrep findings
-- labels.csv: my hand labelled answer key for semgrep findings
-- results.json: Semgrep output
-- verdicts_temp0.csv: Run 2 (temperature 0, official)
-- verdicts_default_sampling.csv: Run 1 (default sampling)
+- `triage.py`: builds the prompt for each finding, queries the local model, saves verdicts
+- `compare.py`: scores a verdicts file against the labels
+- `list_findings.py`: prints the Semgrep findings
+- `labels.csv`: my hand labelled answer key for semgrep findings
+- `results.json`: semgrep output
+- `verdicts_temp0.csv`: run 2 (temperature 0, official)
+- `verdicts_default_sampling.csv`: run 1 (default sampling)
 
 ## Possible next steps 
 - Try a larger model or few shot examples, and add a formal reasoning correctness score
