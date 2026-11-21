@@ -72,9 +72,9 @@ if __name__ == "__main__":
             "llm_reason": reason,
         })
 
-    with open("verdicts.csv", "w", newline="") as f:
+    with open("verdicts_temp0.csv", "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0].keys())
         writer.writeheader()
         writer.writerows(rows)
 
-    print("Saved verdicts.csv")
+    print("Saved verdicts_temp0.csv")
