@@ -55,5 +55,5 @@ for number in misses:
     lab = labels[number]
     ver = verdicts[number]
     print(f"  #{number} {lab['file']}:{lab['line']}")
-    print(f"     your label: {lab['label']} - {lab['reason']}")
+    print(f"     label:      {lab['label']} - {lab['reason']}")
     print(f"     model:      {ver['llm_verdict']} - {ver['llm_reason'][:150]}")

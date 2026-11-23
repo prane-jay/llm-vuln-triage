@@ -1,5 +1,6 @@
 import csv
 import json
+import sys
 import os
 import requests
 
@@ -22,11 +23,11 @@ def get_context(path, line, before=15, after=15):
     return "\n".join(out)
 
 
-def build_prompt(finding):
+def build_prompt(finding, before=15):
     rule = finding["check_id"]
     path = finding["path"]
     line = finding["start"]["line"]
-    code = get_context(path, line)
+    code = get_context(path, line, before=before)
     return f"""Act as a security code reviewer. Semgrep flagged the code below.
 Decide whether this is a real vulnerability or a false positive.
 
@@ -51,10 +52,13 @@ if __name__ == "__main__":
     with open(RESULTS) as f:
         findings = json.load(f)["results"]
 
+    before = int(sys.argv[1]) if len(sys.argv) > 1 else 15
+    out_file = "verdicts_temp0.csv" if before == 15 else f"verdicts_temp0_ctx{before}.csv"
+
     rows = []
     for number, finding in enumerate(findings, start=1):
         print(f"Finding {number}/{len(findings)} ...", flush=True)
-        answer = ask(build_prompt(finding))
+        answer = ask(build_prompt(finding, before))
         try:
             parsed = json.loads(answer)
             verdict = str(parsed["verdict"]).strip().lower()
@@ -72,9 +76,9 @@ if __name__ == "__main__":
             "llm_reason": reason,
         })
 
-    with open("verdicts_temp0.csv", "w", newline="") as f:
+    with open(out_file, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0].keys())
         writer.writeheader()
         writer.writerows(rows)
 
-    print("Saved verdicts_temp0.csv")
+    print(f"Saved {out_file}")
