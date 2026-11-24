@@ -25,8 +25,8 @@ This project scans OWASP Juice Shop with Semgrep, then asks a small local LLM to
 
 ## Results
 
-| ---------------------------------------- | --------------------------- |
 | Metric                                   | 40 lines of context (final) |
+| ---------------------------------------- | --------------------------- |
 | Accuracy                                 | 12/14 (85.7%)               |
 | "Always real" baseline                   | 12/14 (85.7%)               |
 | Real findings kept as real               | 12/12                       |
